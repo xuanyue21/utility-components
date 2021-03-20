@@ -1,0 +1,39 @@
+.marquee-wrap {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    .marquee-contain {
+      width: 100%;
+      height: 100%;
+      font-size: 20px;
+      transform: translate3d(0, 0, 0);
+      &.row {
+        height: 100%;
+        display: inline-block;
+        text-align: left;
+        white-space: nowrap;
+        animation: rowAni linear infinite;
+        .data,
+        .copy {
+          display: inline-block;
+          vertical-align: top;
+          div {
+            display: inline-block;
+          }
+        }
+      }
+      &.col {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        animation: colAni linear infinite 2s;
+        .data,
+        .copy {
+          display: block;
+          div {
+            display: block;
+          }
+        }
+      }
+    }
+  }
