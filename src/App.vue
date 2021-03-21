@@ -1,6 +1,6 @@
 <!--
  * @Author: 翟珂峰
- * @LastEditTime: 2021-03-21 17:21:24
+ * @LastEditTime: 2021-03-21 21:45:31
  * @Description: 
 -->
 <template>
@@ -14,22 +14,22 @@
       :direction="'row'">
     </marquee> -->
 
-    <Snow/>
+    <!-- <Snow/> -->
   </div>
 </template>
 
 <script>
+import NewSnow from './js/snow.js';
 // marquee 组件
 // import Marquee from './components/marquee/marquee.vue';
 // import marqueeData from '../mock/marquee.js'; 
 
-import Snow from './components/snowCanvas/snow.vue';
-
+// import Snow from './components/snowCanvas/snow.vue';
 export default {
   name: 'App',
   components: {
     // Marquee,
-    Snow
+    // Snow
   },
   data(){
     return{
@@ -38,6 +38,12 @@ export default {
   },
   created(){
     // this.marqueeArr = marqueeData;
+    // new NewSnow({
+    //   isRain: true,
+    //   num: 150,
+    //   maxSpeed: 15,
+    // })
+    new NewSnow()
   }
 }
 </script>
@@ -46,6 +52,7 @@ export default {
 #app{
   width: 100vw;
   height: 100vh;
+  background: skyblue;
   .marquee-wrap{
     width: 300px;
     height: 23px;
