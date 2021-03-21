@@ -1,28 +1,35 @@
 <!--
  * @Author: 翟珂峰
- * @LastEditTime: 2021-03-20 18:30:41
+ * @LastEditTime: 2021-03-21 17:21:24
  * @Description: 
 -->
 <template>
   <div id="app">
-    <marquee
+    <!-- 跑马灯 -->
+    <!-- <marquee
       :list="marqueeArr"
       :gap="+0"
       :speed="+0.4"
       :loop="true"
       :direction="'row'">
-    </marquee>
+    </marquee> -->
+
+    <Snow/>
   </div>
 </template>
 
 <script>
-import Marquee from './components/marquee/marquee.vue';
-import marqueeData from '../mock/marquee.js';
+// marquee 组件
+// import Marquee from './components/marquee/marquee.vue';
+// import marqueeData from '../mock/marquee.js'; 
+
+import Snow from './components/snowCanvas/snow.vue';
 
 export default {
   name: 'App',
   components: {
-    Marquee
+    // Marquee,
+    Snow
   },
   data(){
     return{
@@ -30,16 +37,12 @@ export default {
     }
   },
   created(){
-    this.marqueeArr = marqueeData;
+    // this.marqueeArr = marqueeData;
   }
 }
 </script>
 
 <style lang="scss" scoped>
-*{
-  margin: 0;
-  padding:0;
-}
 #app{
   width: 100vw;
   height: 100vh;
