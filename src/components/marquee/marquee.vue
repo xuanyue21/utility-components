@@ -1,6 +1,6 @@
 <!--
  * @Author: 翟珂峰
- * @LastEditTime: 2021-03-20 18:33:07
+ * @LastEditTime: 2021-03-23 21:15:13
  * @Description: 这里是跑马灯组件
 -->
 
@@ -68,7 +68,7 @@ export default {
     // 横向跑马灯的速率
     speed:{
       type: Number,
-      default: 0.6
+      default: 0.8
     },
     // 是否需要实现无缝循环
     loop:{
@@ -96,7 +96,7 @@ export default {
         console.log('记录横向当前时间=>>>',time)
         return  `${time}s`
       }else if(this.direction === 'col'){
-        let time = parseFloat(Math.ceil(1.15 * this.list.length));
+        let time = parseFloat(Math.ceil(this.speed * this.list.length));
         console.log('记录竖直当前时间=>>>',time)
         return  `${time}s`
       }

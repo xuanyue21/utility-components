@@ -1,6 +1,6 @@
 /*
  * @Author: 翟珂峰
- * @LastEditTime: 2021-03-21 21:44:19
+ * @LastEditTime: 2021-03-23 21:47:07
  * @Description: 创建下雪的js方法
  */
 
@@ -20,6 +20,9 @@ class Snow {
         this.isRain = opt.isRain || false
         // 元素
         this.el = null
+
+        //是否有父元素
+        this.parentNode = opt.parentNode || null;
         // 倾斜方向
         this.dir = opt.dir || 'r'
         // 直径
@@ -60,21 +63,33 @@ class Snow {
         this.quickWidth = opt.quickWidth || 80
         // 快速划过的透明度
         this.quickOpacity = opt.quickOpacity || 0.2
-        // 窗口尺寸
-        this.windowWidth = window.innerWidth
-        this.windowHeight = window.innerHeight
-
+        
+        this.isImg = opt.isImg || false;
+        this.setArea();
         this.init()
     }
 
+    setArea(){
+        if(this.parentNode) {
+            const {width,height} = document.getElementById(this.parentNode)
+
+            this.areaWidth = width
+            this.areaHeight = height
+        } else {
+             // 窗口尺寸
+            this.areaWidth = window.innerWidth
+            this.areaHeight = window.innerHeight
+        }
+        
+    }
     // 随机初始化属性
     init (reset) {
         let isQuick = Math.random() > 0.8
         this.isSwing = Math.random() > 0.8
         this.width = isQuick ? this.quickWidth : Math.floor(Math.random() * this.maxWidth + this.minWidth)
         this.opacity = isQuick ? this.quickOpacity : Math.random()
-        this.x = Math.floor(Math.random() * (this.windowWidth - this.width))
-        this.y = Math.floor(Math.random() * (this.windowHeight - this.width))
+        this.x = Math.floor(Math.random() * (this.areaWidth - this.width))
+        this.y = Math.floor(Math.random() * (this.areaHeight - this.width))
         if (reset && Math.random() > 0.8) {
             this.x = -this.width
         } else if (reset) {
@@ -90,14 +105,17 @@ class Snow {
     // 设置样式
     setStyle () {
         this.el.style.cssText = `
-            position: fixed;
+            position: ${this.parentNode?'absolute':'fixed'};
             left: 0;
             top: 0;
             display: block;
             width: ${this.isRain ? 1 : this.width}px;
             height: ${this.width}px;
             opacity: ${this.opacity};
-            background-image: radial-gradient(#fff 0%, rgba(255, 255, 255, 0) 60%);
+            background-image: ${!this.isRain && this.isImg?'url(xxxx)':'radial-gradient(#fff 0%, rgba(255, 255, 255, 0) 60%)'};
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
             border-radius: 50%;
             z-index: 9999999999999;
             pointer-events: none;
@@ -109,7 +127,13 @@ class Snow {
     render () {
         this.el = document.createElement('div')
         this.setStyle()
-        document.body.appendChild(this.el)
+        if(!this.parentNode) {
+            document.body.appendChild(this.el)
+        } else {
+            const divEle = document.getElementById(this.parentNode);
+            divEle.appendChild(this.el)
+        }
+       
     }
 
     move () {
@@ -133,7 +157,7 @@ class Snow {
             this.y += this.sy
         }
         // 完全离开窗口就调一下初始化方法，另外还需要修改一下init方法，因为重新出现我们是希望它的y坐标为0或者小于0，这样就不会又凭空出现的感觉，而是从天上下来的
-        if (this.x < -this.width || this.x > this.windowWidth || this.y > this.windowHeight) {
+        if (this.x < -this.width || this.x > this.areaWidth || this.y > this.areaHeight) {
           this.init(true)
           this.setStyle()
         }
